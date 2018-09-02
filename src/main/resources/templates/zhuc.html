@@ -15,6 +15,7 @@
 	<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
 	<!--  <script type="text/javascript" src="js/jquery.SuperSlide.2.1.1.source.js"></script> -->
 	<script type="text/javascript" src="../js/select.js"></script>
+	<script type="text/javascript" src="../js/zhuc.js"></script>
 </head>
 <body>
 <!--dengl-->
@@ -41,28 +42,41 @@
               	<span class="reg-label">
                 	<label for="J_Name">用户名：</label>
               	</span>
-				<input   class="i-text" type="text">
+				<input  class="i-text" type="text" id="username">
 				<!--备注————display使用 inline-block-->
 				<div class="msg-box">
-					<div class="msg-box" style="display: none;">
+					<div class="msg-box" id="usernameErrorBox" style="display: none;">
 						<div class="msg-weak" style="display: inline-block;"> <i></i>
 							<div class="msg-cont">4-20个字符，支持汉字、字母、数字及“-”、“_”组合</div>
 						</div>
 					</div>
-					<div class="msg-weak err-tips"  style="display: inline-block;"><div>请输入用户名</div></div>
+					<div style="display: none" id="checkusernameBox">
+						<div  class="msg-weak err-tips"  style="display: inline-block;"><div>请输入用户名</div></div>
+					</div>
+					<div style="display: none" id="hasUsernameBox">
+						<div  class="msg-weak err-tips"  style="display: inline-block;"><div>用户名已存在</div></div>
+					</div>
+
 				</div>
-				<span class="suc-icon"></span>
+					<div  id="usernameCorrect" style="display: none">
+						<span class="suc-icon"></span>
+					</div>
 			</div>
 			<div class="reg-items" >
               	<span class="reg-label">
                 	<label for="J_Name">设置密码：</label>
               	</span>
-				<input   class="i-text" type="text">
+				<input   class="i-text" type="password" id="password">
 				<!--备注————display使用 inline-block-->
 				<div class="msg-box">
-					<div class="msg-box" style="display: none;">
-						<div class="msg-weak" style="display: inline-block;"> <i></i>
+					<div class="msg-box" style="display: none;" id="capLocksKey">
+						<div class="msg-weak" style="display: inline-block;" > <i></i>
 							<div class="msg-cont">键盘大写锁定已打开，请注意大小写!</div>
+						</div>
+					</div>
+					<div class="msg-box" style="display: none;" id="passwordErrorBox">
+						<div class="msg-weak" style="display: inline-block;" > <i></i>
+							<div class="msg-cont">输入6-20个字母、数字、下划线  </div>
 						</div>
 					</div>
 					<div class="msg-weak err-tips"  style="display:none;"><div>请输入密码</div></div>
@@ -72,31 +86,33 @@
               	<span class="reg-label">
                 	<label for="J_Name">确认密码：</label>
               	</span>
-				<input   class="i-text" type="text" disabled="disabled">
+				<input   class="i-text" type="password" id="confirmPassword">
 				<!--备注————display使用 inline-block-->
 				<div class="msg-box">
-					<div class="msg-weak err-tips"  style="display: none;"><div>密码不一样</div></div>
+					<div class="msg-weak err-tips" id="checkpasswordBox"  style="display: none;"><div>密码不一样</div></div>
 				</div>
 			</div>
 			<div class="reg-items" >
               	<span class="reg-label">
                 	<label for="J_Name">手机号码：</label>
               	</span>
-				<input   class="i-text" type="text">
+				<input   class="i-text" type="text"  id="telephone">
 				<!--备注————display使用 inline-block-->
 				<div class="msg-box">
-					<div class="msg-weak err-tips"  style="display:none;"><div>手机号不能为空</div></div>
+					<div class="msg-weak err-tips"  style="display:none;" id="checkphoneBox"><div>手机号不能为空</div></div>
+					<div class="msg-weak err-tips"  style="display:none;" id="phoneErrorBox"><div>手机号码有误</div></div>
+					<div class="msg-weak err-tips"  style="display:none;" id="hasPhoneBox"><div>手机号码已存在</div></div>
 				</div>
 			</div>
 			<div class="reg-items" >
               	<span class="reg-label">
-                	<label for="J_Name">手机号码：</label>
+                	<label for="J_Name">验证码：</label>
               	</span>
-				<input   class="i-text i-short" type="text">
+				<input   class="i-text i-short" type="text" id="identifyingCode">
 				<div class="check check-border" style="position:relative;left:0">
-					<a class="check-phone" style="padding:11px 10px 14px 10px;*line-height:60px;">获取短信验证码</a>
-					<span class="check-phone disable" style="display: none;"><em>60</em>秒后重新获取</span>
-					<a class="check-phone" style="display: none;padding:11px 10px 14px 10px">重新获取验证码</a>
+					<a class="check-phone" style="padding:11px 10px 14px 10px;*line-height:60px;" id="getIdentify">获取短信验证码</a>
+					<span class="check-phone disable" style="display: none;" id="sixtyResend"><em>60</em>秒后重新获取</span>
+					<a class="check-phone" style="display: none;padding:11px 10px 14px 10px;*line-height:60px;" id="resendIdentify">重新获取验证码</a>
 				</div>
 				<!--备注————display使用 inline-block-->
 				<div class="msg-box">
@@ -110,7 +126,7 @@
 				<div class="dag_biaod">
 					<input type="checkbox" value="english" >
 					阅读并同意
-					<a href="#" class="ftx-05 ml10">《wangdi通城用户注册协议》</a>
+					<a href="#" class="ftx-05 ml10">《用户注册协议》</a>
 					<a href="#" class="ftx-05 ml10">《隐私协议》</a>
 				</div>
 			</div>
@@ -118,7 +134,7 @@
               	<span class="reg-label">
                 	<label for="J_Name"> </label>
               	</span>
-				<input class="reg-btn" value="立即注册" type="button">
+				<input class="reg-btn" value="立即注册" type="button" id="zhucButton">
 			</div>
 		</div>
 		<div class="xiaogg">
